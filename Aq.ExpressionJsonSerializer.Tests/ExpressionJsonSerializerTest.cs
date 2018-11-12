@@ -213,17 +213,17 @@ namespace Aq.ExpressionJsonSerializer.Tests
                 get
                 {
                     switch (key) {
-                        case "A": return this.A;
-                        case "B": return this.B;
-                        case "C": return this.C ?? 0;
+                        case "A": return A;
+                        case "B": return B;
+                        case "C": return C ?? 0;
                         default: throw new NotImplementedException();
                     }
                 }
             }
             public Func<int> Func;
-            public int Method() { return this.A; }
+            public int Method() { return A; }
             public int Method(string key) { return this[key]; }
-            public object Method3() { return this.A; }
+            public object Method3() { return A; }
         }
 
         private static void TestExpression(LambdaExpression source)

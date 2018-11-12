@@ -10,9 +10,9 @@ namespace Aq.ExpressionJsonSerializer
             var expression = expr as MemberExpression;
             if (expression == null) { return false; }
 
-            this.Prop("typeName", "member");
-            this.Prop("expression", this.Expression(expression.Expression));
-            this.Prop("member", this.Member(expression.Member));
+            Prop("typeName", "member");
+            Prop("expression", Expression(expression.Expression));
+            Prop("member", Member(expression.Member));
 
             return true;
         }
