@@ -5,7 +5,7 @@ using Expr = System.Linq.Expressions.Expression;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Deserializer
+    internal partial class Deserializer
     {
         private GotoExpression GotoExpression(
             ExpressionType nodeType, Type type, JObject obj)

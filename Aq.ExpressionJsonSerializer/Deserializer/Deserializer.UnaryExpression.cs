@@ -5,15 +5,16 @@ using Expr = System.Linq.Expressions.Expression;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Deserializer
+    internal partial class Deserializer
     {
         private UnaryExpression UnaryExpression(
             ExpressionType nodeType, Type type, JObject obj)
         {
             var operand = Prop(obj, "operand", Expression);
             var method = Prop(obj, "method", Method);
-            
-            switch (nodeType) {
+
+            switch (nodeType)
+            {
                 case ExpressionType.ArrayLength: return Expr.ArrayLength(operand);
                 case ExpressionType.Convert: return Expr.Convert(operand, type, method);
                 case ExpressionType.ConvertChecked: return Expr.ConvertChecked(operand, type, method);

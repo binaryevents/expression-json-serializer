@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Serializer
+    internal partial class Serializer
     {
         private static readonly Dictionary<Type, Tuple<string, string, Type[]>>
             TypeCache = new Dictionary<Type, Tuple<string, string, Type[]>>();
@@ -16,24 +16,30 @@ namespace Aq.ExpressionJsonSerializer
 
         private void TypeInternal(Type type)
         {
-            if (type == null) {
+            if (type == null)
+            {
                 _writer.WriteNull();
             }
-            else {
+            else
+            {
                 Tuple<string, string, Type[]> tuple;
-                if (!TypeCache.TryGetValue(type, out tuple)) {
+                if (!TypeCache.TryGetValue(type, out tuple))
+                {
                     var assemblyName = type.Assembly.FullName;
-                    if (type.IsGenericType) {
+                    if (type.IsGenericType)
+                    {
                         var def = type.GetGenericTypeDefinition();
                         tuple = new Tuple<string, string, Type[]>(
                             def.Assembly.FullName, def.FullName,
                             type.GetGenericArguments()
                         );
                     }
-                    else {
+                    else
+                    {
                         tuple = new Tuple<string, string, Type[]>(
                             assemblyName, type.FullName, null);
                     }
+
                     TypeCache[type] = tuple;
                 }
 
@@ -52,10 +58,12 @@ namespace Aq.ExpressionJsonSerializer
 
         private void ConstructorInternal(ConstructorInfo constructor)
         {
-            if (constructor == null) {
+            if (constructor == null)
+            {
                 _writer.WriteNull();
             }
-            else {
+            else
+            {
                 _writer.WriteStartObject();
                 Prop("type", Type(constructor.DeclaringType));
                 Prop("name", constructor.Name);
@@ -71,12 +79,15 @@ namespace Aq.ExpressionJsonSerializer
 
         private void MethodInternal(MethodInfo method)
         {
-            if (method == null) {
+            if (method == null)
+            {
                 _writer.WriteNull();
             }
-            else {
+            else
+            {
                 _writer.WriteStartObject();
-                if (method.IsGenericMethod) {
+                if (method.IsGenericMethod)
+                {
                     var meth = method.GetGenericMethodDefinition();
                     var generic = method.GetGenericArguments();
 
@@ -85,11 +96,13 @@ namespace Aq.ExpressionJsonSerializer
                     Prop("signature", meth.ToString());
                     Prop("generic", Enumerable(generic, Type));
                 }
-                else {
+                else
+                {
                     Prop("type", Type(method.DeclaringType));
                     Prop("name", method.Name);
                     Prop("signature", method.ToString());
                 }
+
                 _writer.WriteEndObject();
             }
         }
@@ -101,10 +114,12 @@ namespace Aq.ExpressionJsonSerializer
 
         private void PropertyInternal(PropertyInfo property)
         {
-            if (property == null) {
+            if (property == null)
+            {
                 _writer.WriteNull();
             }
-            else {
+            else
+            {
                 _writer.WriteStartObject();
                 Prop("type", Type(property.DeclaringType));
                 Prop("name", property.Name);
@@ -120,10 +135,12 @@ namespace Aq.ExpressionJsonSerializer
 
         private void MemberInternal(MemberInfo member)
         {
-            if (member == null) {
+            if (member == null)
+            {
                 _writer.WriteNull();
             }
-            else {
+            else
+            {
                 _writer.WriteStartObject();
                 Prop("type", Type(member.DeclaringType));
                 Prop("memberType", (int) member.MemberType);

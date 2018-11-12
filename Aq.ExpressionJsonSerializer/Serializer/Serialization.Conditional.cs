@@ -2,12 +2,12 @@
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Serializer
+    internal partial class Serializer
     {
         private bool ConditionalExpression(Expression expr)
         {
             var expression = expr as ConditionalExpression;
-            if (expression == null) { return false; }
+            if (expression == null) return false;
 
             Prop("typeName", "conditional");
             Prop("test", Expression(expression.Test));

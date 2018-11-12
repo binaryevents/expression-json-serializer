@@ -5,7 +5,7 @@ using Expr = System.Linq.Expressions.Expression;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Deserializer
+    internal partial class Deserializer
     {
         private LambdaExpression LambdaExpression(
             ExpressionType nodeType, Type type, JObject obj)
@@ -14,7 +14,8 @@ namespace Aq.ExpressionJsonSerializer
             var tailCall = Prop(obj, "tailCall").Value<bool>();
             var parameters = Prop(obj, "parameters", Enumerable(ParameterExpression));
 
-            switch (nodeType) {
+            switch (nodeType)
+            {
                 case ExpressionType.Lambda:
                     return Expr.Lambda(body, tailCall, parameters);
                 default:
@@ -24,16 +25,14 @@ namespace Aq.ExpressionJsonSerializer
 
         private LambdaExpression LambdaExpression(JToken token)
         {
-            if (token == null || token.Type != JTokenType.Object) {
-                return null;
-            }
+            if (token == null || token.Type != JTokenType.Object) return null;
 
             var obj = (JObject) token;
             var nodeType = Prop(obj, "nodeType", Enum<ExpressionType>);
             var type = Prop(obj, "type", Type);
             var typeName = Prop(obj, "typeName", t => t.Value<string>());
 
-            if (typeName != "lambda") { return null; }
+            if (typeName != "lambda") return null;
 
             return LambdaExpression(nodeType, type, obj);
         }

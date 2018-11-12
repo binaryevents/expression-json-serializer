@@ -5,7 +5,7 @@ using Expr = System.Linq.Expressions.Expression;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Deserializer
+    internal partial class Deserializer
     {
         private BlockExpression BlockExpression(
             ExpressionType nodeType, Type type, JObject obj)
@@ -13,7 +13,8 @@ namespace Aq.ExpressionJsonSerializer
             var expressions = Prop(obj, "expressions", Enumerable(Expression));
             var variables = Prop(obj, "variables", Enumerable(ParameterExpression));
 
-            switch (nodeType) {
+            switch (nodeType)
+            {
                 case ExpressionType.Block:
                     return Expr.Block(type, variables, expressions);
                 default:

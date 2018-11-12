@@ -5,15 +5,16 @@ using Expr = System.Linq.Expressions.Expression;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Deserializer
+    internal partial class Deserializer
     {
         private TypeBinaryExpression TypeBinaryExpression(
             ExpressionType nodeType, Type type, JObject obj)
         {
             var expression = Prop(obj, "expression", Expression);
             var typeOperand = Prop(obj, "typeOperand", Type);
-            
-            switch (nodeType) {
+
+            switch (nodeType)
+            {
                 case ExpressionType.TypeIs:
                     return Expr.TypeIs(expression, typeOperand);
                 case ExpressionType.TypeEqual:

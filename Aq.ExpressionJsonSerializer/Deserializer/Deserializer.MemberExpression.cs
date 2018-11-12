@@ -5,7 +5,7 @@ using Expr = System.Linq.Expressions.Expression;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Deserializer
+    internal partial class Deserializer
     {
         private MemberExpression MemberExpression(
             ExpressionType nodeType, Type type, JObject obj)
@@ -13,7 +13,8 @@ namespace Aq.ExpressionJsonSerializer
             var expression = Prop(obj, "expression", Expression);
             var member = Prop(obj, "member", Member);
 
-            switch (nodeType) {
+            switch (nodeType)
+            {
                 case ExpressionType.MemberAccess:
                     return Expr.MakeMemberAccess(expression, member);
                 default:

@@ -5,7 +5,7 @@ using Expr = System.Linq.Expressions.Expression;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Deserializer
+    internal partial class Deserializer
     {
         private IndexExpression IndexExpression(
             ExpressionType nodeType, Type type, JObject obj)
@@ -14,7 +14,8 @@ namespace Aq.ExpressionJsonSerializer
             var indexer = Prop(obj, "indexer", Property);
             var arguments = Prop(obj, "arguments", Enumerable(Expression));
 
-            switch (nodeType) {
+            switch (nodeType)
+            {
                 case ExpressionType.Index:
                     return Expr.MakeIndex(expression, indexer, arguments);
                 default:

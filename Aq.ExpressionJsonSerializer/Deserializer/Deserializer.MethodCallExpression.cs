@@ -5,7 +5,7 @@ using Expr = System.Linq.Expressions.Expression;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Deserializer
+    internal partial class Deserializer
     {
         private MethodCallExpression MethodCallExpression(
             ExpressionType nodeType, Type type, JObject obj)
@@ -14,7 +14,8 @@ namespace Aq.ExpressionJsonSerializer
             var method = Prop(obj, "method", Method);
             var arguments = Prop(obj, "arguments", Enumerable(Expression));
 
-            switch (nodeType) {
+            switch (nodeType)
+            {
                 case ExpressionType.ArrayIndex:
                     return Expr.ArrayIndex(instance, arguments);
                 case ExpressionType.Call:

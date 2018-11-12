@@ -5,12 +5,13 @@ using Expr = System.Linq.Expressions.Expression;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Deserializer
+    internal partial class Deserializer
     {
         private DefaultExpression DefaultExpression(
             ExpressionType nodeType, Type type, JObject obj)
         {
-            switch (nodeType) {
+            switch (nodeType)
+            {
                 case ExpressionType.Default:
                     return Expr.Default(type);
                 default:

@@ -36,7 +36,8 @@ namespace Aq.ExpressionJsonSerializer.Tests
             public object Method3() => A;
         }
 
-        private static void TestExpression(LambdaExpression source)
+        [Test]
+        public void ArrayIndex()
         {
             var random = new Random();
             int u;

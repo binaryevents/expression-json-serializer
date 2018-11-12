@@ -2,21 +2,24 @@
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Serializer
+    internal partial class Serializer
     {
         private bool ConstantExpression(Expression expr)
         {
             var expression = expr as ConstantExpression;
-            if (expression == null) { return false; }
+            if (expression == null) return false;
 
             Prop("typeName", "constant");
-            if (expression.Value == null) {
+            if (expression.Value == null)
+            {
                 Prop("value", () => _writer.WriteNull());
             }
-            else {
+            else
+            {
                 var value = expression.Value;
                 var type = value.GetType();
-                Prop("value", () => {
+                Prop("value", () =>
+                {
                     _writer.WriteStartObject();
                     Prop("type", Type(type));
                     Prop("value", Serialize(value, type));

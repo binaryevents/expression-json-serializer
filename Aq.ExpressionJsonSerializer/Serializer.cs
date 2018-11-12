@@ -1,13 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Reflection;
 using Newtonsoft.Json;
 
 namespace Aq.ExpressionJsonSerializer
 {
     internal sealed partial class Serializer
     {
+        private readonly JsonSerializer _serializer;
+
+        private readonly JsonWriter _writer;
+
+        private Serializer(JsonWriter writer, JsonSerializer serializer)
+        {
+            _writer = writer;
+            _serializer = serializer;
+        }
+
         public static void Serialize(
             JsonWriter writer,
             JsonSerializer serializer,
@@ -15,15 +24,6 @@ namespace Aq.ExpressionJsonSerializer
         {
             var s = new Serializer(writer, serializer);
             s.ExpressionInternal(expression);
-        }
-
-        private readonly JsonWriter _writer;
-        private readonly JsonSerializer _serializer;
-
-        private Serializer(JsonWriter writer, JsonSerializer serializer)
-        {
-            _writer = writer;
-            _serializer = serializer;
         }
 
         private Action Serialize(object value, Type type)
@@ -72,14 +72,14 @@ namespace Aq.ExpressionJsonSerializer
 
         private void EnumerableInternal<T>(IEnumerable<T> items, Func<T, Action> func)
         {
-            if (items == null) {
+            if (items == null)
+            {
                 _writer.WriteNull();
             }
-            else {
+            else
+            {
                 _writer.WriteStartArray();
-                foreach (var item in items) {
-                    func(item)();
-                }
+                foreach (var item in items) func(item)();
                 _writer.WriteEndArray();
             }
         }
@@ -91,49 +91,48 @@ namespace Aq.ExpressionJsonSerializer
 
         private void ExpressionInternal(Expression expression)
         {
-            if (expression == null) {
+            if (expression == null)
+            {
                 _writer.WriteNull();
                 return;
             }
 
-            while (expression.CanReduce) {
-                expression = expression.Reduce();
-            }
+            while (expression.CanReduce) expression = expression.Reduce();
 
             _writer.WriteStartObject();
 
             Prop("nodeType", Enum(expression.NodeType));
             Prop("type", Type(expression.Type));
 
-            if (BinaryExpression(expression)) { goto end; }
-            if (BlockExpression(expression)) { goto end; }
-            if (ConditionalExpression(expression)) { goto end; }
-            if (ConstantExpression(expression)) { goto end; }
-            if (DebugInfoExpression(expression)) { goto end; }
-            if (DefaultExpression(expression)) { goto end; }
-            if (DynamicExpression(expression)) { goto end; }
-            if (GotoExpression(expression)) { goto end; }
-            if (IndexExpression(expression)) { goto end; }
-            if (InvocationExpression(expression)) { goto end; }
-            if (LabelExpression(expression)) { goto end; }
-            if (LambdaExpression(expression)) { goto end; }
-            if (ListInitExpression(expression)) { goto end; }
-            if (LoopExpression(expression)) { goto end; }
-            if (MemberExpression(expression)) { goto end; }
-            if (MemberInitExpression(expression)) { goto end; }
-            if (MethodCallExpression(expression)) { goto end; }
-            if (NewArrayExpression(expression)) { goto end; }
-            if (NewExpression(expression)) { goto end; }
-            if (ParameterExpression(expression)) { goto end; }
-            if (RuntimeVariablesExpression(expression)) { goto end; }
-            if (SwitchExpression(expression)) { goto end; }
-            if (TryExpression(expression)) { goto end; }
-            if (TypeBinaryExpression(expression)) { goto end; }
-            if (UnaryExpression(expression)) { goto end; }
+            if (BinaryExpression(expression)) goto end;
+            if (BlockExpression(expression)) goto end;
+            if (ConditionalExpression(expression)) goto end;
+            if (ConstantExpression(expression)) goto end;
+            if (DebugInfoExpression(expression)) goto end;
+            if (DefaultExpression(expression)) goto end;
+            if (DynamicExpression(expression)) goto end;
+            if (GotoExpression(expression)) goto end;
+            if (IndexExpression(expression)) goto end;
+            if (InvocationExpression(expression)) goto end;
+            if (LabelExpression(expression)) goto end;
+            if (LambdaExpression(expression)) goto end;
+            if (ListInitExpression(expression)) goto end;
+            if (LoopExpression(expression)) goto end;
+            if (MemberExpression(expression)) goto end;
+            if (MemberInitExpression(expression)) goto end;
+            if (MethodCallExpression(expression)) goto end;
+            if (NewArrayExpression(expression)) goto end;
+            if (NewExpression(expression)) goto end;
+            if (ParameterExpression(expression)) goto end;
+            if (RuntimeVariablesExpression(expression)) goto end;
+            if (SwitchExpression(expression)) goto end;
+            if (TryExpression(expression)) goto end;
+            if (TypeBinaryExpression(expression)) goto end;
+            if (UnaryExpression(expression)) goto end;
 
             throw new NotSupportedException();
 
-        end:
+            end:
             _writer.WriteEndObject();
         }
     }

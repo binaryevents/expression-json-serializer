@@ -6,7 +6,7 @@ using Expr = System.Linq.Expressions.Expression;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Deserializer
+    internal partial class Deserializer
     {
         private readonly Dictionary<string, ParameterExpression>
             _parameterExpressions = new Dictionary<string, ParameterExpression>();
@@ -17,11 +17,10 @@ namespace Aq.ExpressionJsonSerializer
             var name = Prop(obj, "name", t => t.Value<string>());
 
             ParameterExpression result;
-            if (_parameterExpressions.TryGetValue(name, out result)) {
-                return result;
-            }
+            if (_parameterExpressions.TryGetValue(name, out result)) return result;
 
-            switch (nodeType) {
+            switch (nodeType)
+            {
                 case ExpressionType.Parameter:
                     result = Expr.Parameter(type, name);
                     break;
@@ -35,16 +34,14 @@ namespace Aq.ExpressionJsonSerializer
 
         private ParameterExpression ParameterExpression(JToken token)
         {
-            if (token == null || token.Type != JTokenType.Object) {
-                return null;
-            }
+            if (token == null || token.Type != JTokenType.Object) return null;
 
             var obj = (JObject) token;
             var nodeType = Prop(obj, "nodeType", Enum<ExpressionType>);
             var type = Prop(obj, "type", Type);
             var typeName = Prop(obj, "typeName", t => t.Value<string>());
 
-            if (typeName != "parameter") { return null; }
+            if (typeName != "parameter") return null;
 
             return ParameterExpression(nodeType, type, obj);
         }

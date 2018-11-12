@@ -2,12 +2,12 @@
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Serializer
+    internal partial class Serializer
     {
         private bool BinaryExpression(Expression expr)
         {
             var expression = expr as BinaryExpression;
-            if (expression == null) { return false; }
+            if (expression == null) return false;
 
             Prop("typeName", "binary");
             Prop("left", Expression(expression.Left));

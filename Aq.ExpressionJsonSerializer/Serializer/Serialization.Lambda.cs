@@ -1,14 +1,13 @@
-﻿using System;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Serializer
+    internal partial class Serializer
     {
         private bool LambdaExpression(Expression expr)
         {
             var expression = expr as LambdaExpression;
-            if (expression == null) { return false; }
+            if (expression == null) return false;
 
             Prop("typeName", "lambda");
             Prop("name", expression.Name);

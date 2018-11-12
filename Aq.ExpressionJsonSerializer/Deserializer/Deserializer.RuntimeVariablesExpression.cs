@@ -5,14 +5,15 @@ using Expr = System.Linq.Expressions.Expression;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Deserializer
+    internal partial class Deserializer
     {
         private RuntimeVariablesExpression RuntimeVariablesExpression(
             ExpressionType nodeType, Type type, JObject obj)
         {
             var variables = Prop(obj, "variables", Enumerable(ParameterExpression));
 
-            switch (nodeType) {
+            switch (nodeType)
+            {
                 case ExpressionType.RuntimeVariables:
                     return Expr.RuntimeVariables(variables);
                 default:

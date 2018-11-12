@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Serializer
+    internal partial class Serializer
     {
         private readonly Dictionary<ParameterExpression, string>
             _parameterExpressions = new Dictionary<ParameterExpression, string>();
@@ -12,10 +12,11 @@ namespace Aq.ExpressionJsonSerializer
         private bool ParameterExpression(Expression expr)
         {
             var expression = expr as ParameterExpression;
-            if (expression == null) { return false; }
+            if (expression == null) return false;
 
             string name;
-            if (!_parameterExpressions.TryGetValue(expression, out name)) {
+            if (!_parameterExpressions.TryGetValue(expression, out name))
+            {
                 name = expression.Name ?? "p_" + Guid.NewGuid().ToString("N");
                 _parameterExpressions[expression] = name;
             }

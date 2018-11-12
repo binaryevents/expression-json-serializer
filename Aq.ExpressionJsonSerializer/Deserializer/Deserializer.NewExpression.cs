@@ -5,7 +5,7 @@ using Expr = System.Linq.Expressions.Expression;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Deserializer
+    internal partial class Deserializer
     {
         private NewExpression NewExpression(
             ExpressionType nodeType, Type type, JObject obj)
@@ -14,17 +14,16 @@ namespace Aq.ExpressionJsonSerializer
             var arguments = Prop(obj, "arguments", Enumerable(Expression));
             var members = Prop(obj, "members", Enumerable(Member));
 
-            switch (nodeType) {
+            switch (nodeType)
+            {
                 case ExpressionType.New:
-                    if (arguments == null) {
-                        if (members == null) {
-                            return Expr.New(constructor);
-                        }
+                    if (arguments == null)
+                    {
+                        if (members == null) return Expr.New(constructor);
                         return Expr.New(constructor, new Expression[0], members);
                     }
-                    if (members == null) {
-                        return Expr.New(constructor, arguments);
-                    }
+
+                    if (members == null) return Expr.New(constructor, arguments);
                     return Expr.New(constructor, arguments, members);
                 default:
                     throw new NotSupportedException();

@@ -5,7 +5,7 @@ using Expr = System.Linq.Expressions.Expression;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Deserializer
+    internal partial class Deserializer
     {
         private BinaryExpression BinaryExpression(
             ExpressionType nodeType, Type type, JObject obj)
@@ -16,7 +16,8 @@ namespace Aq.ExpressionJsonSerializer
             var conversion = Prop(obj, "conversion", LambdaExpression);
             var liftToNull = Prop(obj, "liftToNull").Value<bool>();
 
-            switch (nodeType) {
+            switch (nodeType)
+            {
                 case ExpressionType.Add: return Expr.Add(left, right, method);
                 case ExpressionType.AddAssign: return Expr.AddAssign(left, right, method, conversion);
                 case ExpressionType.AddAssignChecked: return Expr.AddAssignChecked(left, right, method, conversion);
@@ -42,7 +43,8 @@ namespace Aq.ExpressionJsonSerializer
                 case ExpressionType.ModuloAssign: return Expr.ModuloAssign(left, right, method, conversion);
                 case ExpressionType.Multiply: return Expr.Multiply(left, right, method);
                 case ExpressionType.MultiplyAssign: return Expr.MultiplyAssign(left, right, method, conversion);
-                case ExpressionType.MultiplyAssignChecked: return Expr.MultiplyAssignChecked(left, right, method, conversion);
+                case ExpressionType.MultiplyAssignChecked:
+                    return Expr.MultiplyAssignChecked(left, right, method, conversion);
                 case ExpressionType.MultiplyChecked: return Expr.MultiplyChecked(left, right, method);
                 case ExpressionType.NotEqual: return Expr.NotEqual(left, right, liftToNull, method);
                 case ExpressionType.Or: return Expr.Or(left, right, method);
@@ -54,7 +56,8 @@ namespace Aq.ExpressionJsonSerializer
                 case ExpressionType.RightShiftAssign: return Expr.RightShiftAssign(left, right, method, conversion);
                 case ExpressionType.Subtract: return Expr.Subtract(left, right, method);
                 case ExpressionType.SubtractAssign: return Expr.SubtractAssign(left, right, method, conversion);
-                case ExpressionType.SubtractAssignChecked: return Expr.SubtractAssignChecked(left, right, method, conversion);
+                case ExpressionType.SubtractAssignChecked:
+                    return Expr.SubtractAssignChecked(left, right, method, conversion);
                 case ExpressionType.SubtractChecked: return Expr.SubtractChecked(left, right, method);
                 default: throw new NotSupportedException();
             }

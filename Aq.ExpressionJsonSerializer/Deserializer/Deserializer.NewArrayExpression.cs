@@ -5,7 +5,7 @@ using Expr = System.Linq.Expressions.Expression;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Deserializer
+    internal partial class Deserializer
     {
         private NewArrayExpression NewArrayExpression(
             ExpressionType nodeType, Type type, JObject obj)
@@ -13,7 +13,8 @@ namespace Aq.ExpressionJsonSerializer
             var elementType = Prop(obj, "elementType", Type);
             var expressions = Prop(obj, "expressions", Enumerable(Expression));
 
-            switch (nodeType) {
+            switch (nodeType)
+            {
                 case ExpressionType.NewArrayInit:
                     return Expr.NewArrayInit(elementType, expressions);
                 case ExpressionType.NewArrayBounds:

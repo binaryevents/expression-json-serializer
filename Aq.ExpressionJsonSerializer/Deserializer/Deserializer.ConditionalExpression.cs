@@ -5,7 +5,7 @@ using Expr = System.Linq.Expressions.Expression;
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Deserializer
+    internal partial class Deserializer
     {
         private ConditionalExpression ConditionalExpression(
             ExpressionType nodeType, Type type, JObject obj)
@@ -14,7 +14,8 @@ namespace Aq.ExpressionJsonSerializer
             var ifTrue = Prop(obj, "ifTrue", Expression);
             var ifFalse = Prop(obj, "ifFalse", Expression);
 
-            switch (nodeType) {
+            switch (nodeType)
+            {
                 case ExpressionType.Conditional:
                     return Expr.Condition(test, ifTrue, ifFalse, type);
                 default:

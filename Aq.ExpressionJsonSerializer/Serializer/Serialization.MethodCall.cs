@@ -2,12 +2,12 @@
 
 namespace Aq.ExpressionJsonSerializer
 {
-    partial class Serializer
+    internal partial class Serializer
     {
         private bool MethodCallExpression(Expression expr)
         {
             var expression = expr as MethodCallExpression;
-            if (expression == null) { return false; }
+            if (expression == null) return false;
 
             Prop("typeName", "methodCall");
             Prop("object", Expression(expression.Object));
