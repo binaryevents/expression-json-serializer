@@ -8,8 +8,8 @@ namespace Aq.ExpressionJsonSerializer
 {
     partial class Deserializer
     {
-        private static readonly Dictionary<Assembly, Dictionary<string, Dictionary<string, Type>>>
-            TypeCache = new Dictionary<Assembly, Dictionary<string, Dictionary<string, Type>>>();
+        private static readonly Dictionary<string, Dictionary<string, Dictionary<string, Type>>>
+            TypeCache = new Dictionary<string, Dictionary<string, Dictionary<string, Type>>>();
 
         private static readonly Dictionary<Type, Dictionary<string, Dictionary<string, ConstructorInfo>>>
             ConstructorCache = new Dictionary<Type, Dictionary<string, Dictionary<string, ConstructorInfo>>>();
@@ -25,32 +25,28 @@ namespace Aq.ExpressionJsonSerializer
             var typeName = Prop(obj, "typeName", t => t.Value<string>());
             var generic = Prop(obj, "genericArguments", Enumerable(Type));
 
-            Dictionary<string, Dictionary<string, Type>> assemblies;
-            if (!TypeCache.TryGetValue(this._assembly, out assemblies)) {
+            if (!TypeCache.TryGetValue(assemblyName, out var assemblies)) {
                 assemblies = new Dictionary<string, Dictionary<string, Type>>();
-                TypeCache[this._assembly] = assemblies;
+                TypeCache[assemblyName] = assemblies;
             }
 
-            Dictionary<string, Type> types;
-            if (!assemblies.TryGetValue(assemblyName, out types)) {
+            if (!assemblies.TryGetValue(assemblyName, out var types)) {
                 types = new Dictionary<string, Type>();
                 assemblies[assemblyName] = types;
             }
 
-            Type type;
-            if (!types.TryGetValue(typeName, out type)) {
-                type = this._assembly.GetType(typeName);
-                if (type == null) {
-                    var assembly = Assembly.Load(new AssemblyName(assemblyName));
-                    type = assembly.GetType(typeName);
-                }
-                if (type == null) {
-                    throw new Exception(
+
+            if (!types.TryGetValue(typeName, out var type)) {
+                var assembly = Assembly.Load(new AssemblyName(assemblyName));
+                type = assembly.GetType(typeName);
+
+                if (type != null)
+                    types[typeName] = type;
+                else
+                    throw new Exception( 
                         "Type could not be found: "
                         + assemblyName + "." + typeName
                     );
-                }
-                types[typeName] = type;
             }
 
             if (generic != null && type.IsGenericTypeDefinition) {
@@ -73,10 +69,9 @@ namespace Aq.ExpressionJsonSerializer
 
             ConstructorInfo constructor;
             Dictionary<string, ConstructorInfo> cache2;
-            Dictionary<string, Dictionary<string, ConstructorInfo>> cache1;
 
-            if (!ConstructorCache.TryGetValue(type, out cache1)) {
-                constructor = this.ConstructorInternal(type, name, signature);
+            if (!ConstructorCache.TryGetValue(type, out var cache1)) {
+                constructor = ConstructorInternal(type, name, signature);
                 
                 cache2 = new Dictionary<
                     string, ConstructorInfo>(1) {

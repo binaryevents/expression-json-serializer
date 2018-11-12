@@ -239,9 +239,7 @@ namespace Aq.ExpressionJsonSerializer.Tests
             };
 
             var settings = new JsonSerializerSettings();
-            settings.Converters.Add(new ExpressionJsonConverter(
-                Assembly.GetAssembly(typeof (ExpressionJsonSerializerTest))
-            ));
+            settings.Converters.Add(new ExpressionJsonConverter());
 
             var json = JsonConvert.SerializeObject(source, settings);
             var target = JsonConvert.DeserializeObject<LambdaExpression>(json, settings);

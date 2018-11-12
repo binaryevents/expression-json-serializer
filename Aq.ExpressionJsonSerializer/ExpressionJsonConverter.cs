@@ -9,10 +9,6 @@ namespace Aq.ExpressionJsonSerializer
     {
         private static readonly System.Type TypeOfExpression = typeof (Expression);
 
-        public ExpressionJsonConverter(Assembly resolvingAssembly)
-        {
-            this._assembly = resolvingAssembly;
-        }
 
         public override bool CanConvert(System.Type objectType)
         {
@@ -30,11 +26,9 @@ namespace Aq.ExpressionJsonSerializer
             JsonReader reader, System.Type objectType,
             object existingValue, JsonSerializer serializer)
         {
-            return Deserializer.Deserialize(
-                this._assembly, JToken.ReadFrom(reader)
+            return Deserializer.Deserialize(JToken.ReadFrom(reader)
             );
         }
 
-        private readonly Assembly _assembly;
     }
 }
