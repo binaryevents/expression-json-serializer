@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using Newtonsoft.Json.Linq;
 using Expr = System.Linq.Expressions.Expression;
 
-namespace Aq.ExpressionJsonSerializer
+namespace Aq.ExpressionJsonSerializer.Deserializer
 {
     internal partial class Deserializer
     {

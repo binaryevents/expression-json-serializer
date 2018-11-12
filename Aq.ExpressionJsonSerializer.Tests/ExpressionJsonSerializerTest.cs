@@ -36,8 +36,7 @@ namespace Aq.ExpressionJsonSerializer.Tests
             public object Method3() => A;
         }
 
-        [Test]
-        public void ArrayIndex()
+        private static void TestExpression(LambdaExpression source)
         {
             var random = new Random();
             int u;
@@ -45,8 +44,8 @@ namespace Aq.ExpressionJsonSerializer.Tests
             {
                 A = random.Next(),
                 B = random.Next(),
-                C = (u = random.Next(0, 2)) == 0 ? null : (int?) u,
-                Array = new[] {random.Next()},
+                C = (u = random.Next(0, 2)) == 0 ? null : (int?)u,
+                Array = new[] { random.Next() },
                 Func = () => u
             };
 
@@ -67,97 +66,97 @@ namespace Aq.ExpressionJsonSerializer.Tests
         private static string ExpressionResult(LambdaExpression expr, Context context)
         {
             return JsonConvert.SerializeObject(expr.Compile().DynamicInvoke(context),
-                new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore});
+                new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
         }
 
         [Test]
-        public void ArrayIndex() => TestExpression((Expression<Func<Context, int>>) (c => c.Array[0]));
+        public void ArrayIndex() => TestExpression((Expression<Func<Context, int>>)(c => c.Array[0]));
 
         [Test]
-        public void ArrayLength() => TestExpression((Expression<Func<Context, int>>) (c => c.Array.Length));
+        public void ArrayLength() => TestExpression((Expression<Func<Context, int>>)(c => c.Array.Length));
 
         [Test]
-        public void Assignment() => TestExpression((Expression<Func<Context, int>>) (c => c.A + c.B));
+        public void Assignment() => TestExpression((Expression<Func<Context, int>>)(c => c.A + c.B));
 
         [Test]
-        public void Coalesce() => TestExpression((Expression<Func<Context, int>>) (c => c.C ?? c.A));
+        public void Coalesce() => TestExpression((Expression<Func<Context, int>>)(c => c.C ?? c.A));
 
         [Test]
-        public void Conditional() => TestExpression((Expression<Func<Context, int>>) (c => c.C == null ? c.A : c.B));
+        public void Conditional() => TestExpression((Expression<Func<Context, int>>)(c => c.C == null ? c.A : c.B));
 
         [Test]
-        public void Constant() => TestExpression((Expression<Func<Context, bool>>) (c => false));
+        public void Constant() => TestExpression((Expression<Func<Context, bool>>)(c => false));
 
         [Test]
-        public void Convert() => TestExpression((Expression<Func<Context, int>>) (c => (short) (c.C ?? 0)));
+        public void Convert() => TestExpression((Expression<Func<Context, int>>)(c => (short)(c.C ?? 0)));
 
         [Test]
-        public void Decrement() => TestExpression((Expression<Func<Context, int>>) (c => c.A - 1));
+        public void Decrement() => TestExpression((Expression<Func<Context, int>>)(c => c.A - 1));
 
         [Test]
-        public void DivisionWithCast() => TestExpression((Expression<Func<Context, float>>) (c => (float) c.A / c.B));
+        public void DivisionWithCast() => TestExpression((Expression<Func<Context, float>>)(c => (float)c.A / c.B));
 
         [Test]
-        public void Equality() => TestExpression((Expression<Func<Context, bool>>) (c => c.A == c.B));
+        public void Equality() => TestExpression((Expression<Func<Context, bool>>)(c => c.A == c.B));
 
         [Test]
-        public void GreaterThan() => TestExpression((Expression<Func<Context, bool>>) (c => c.A > c.B));
+        public void GreaterThan() => TestExpression((Expression<Func<Context, bool>>)(c => c.A > c.B));
 
         [Test]
-        public void Increment() => TestExpression((Expression<Func<Context, int>>) (c => c.A + 1));
+        public void Increment() => TestExpression((Expression<Func<Context, int>>)(c => c.A + 1));
 
         [Test]
-        public void Indexer() => TestExpression((Expression<Func<Context, int>>) (c => c["A"]));
+        public void Indexer() => TestExpression((Expression<Func<Context, int>>)(c => c["A"]));
 
         [Test]
-        public void InitArray() => TestExpression((Expression<Func<Context, int[]>>) (c => new[] {0}));
+        public void InitArray() => TestExpression((Expression<Func<Context, int[]>>)(c => new[] { 0 }));
 
         [Test]
-        public void InitEmptyArray() => TestExpression((Expression<Func<Context, int[,]>>) (c => new int[3, 2]));
+        public void InitEmptyArray() => TestExpression((Expression<Func<Context, int[,]>>)(c => new int[3, 2]));
 
         [Test]
-        public void Invoke() => TestExpression((Expression<Func<Context, int>>) (c => c.Func()));
+        public void Invoke() => TestExpression((Expression<Func<Context, int>>)(c => c.Func()));
 
         [Test]
-        public void Lambda() => TestExpression((Expression<Func<Context, int>>) (c => ((Func<Context, int>) (_ => _.A))(c)));
+        public void Lambda() => TestExpression((Expression<Func<Context, int>>)(c => ((Func<Context, int>)(_ => _.A))(c)));
 
         [Test]
-        public void LeftShift() => TestExpression((Expression<Func<Context, int>>) (c => c.A << c.C ?? 0));
+        public void LeftShift() => TestExpression((Expression<Func<Context, int>>)(c => c.A << c.C ?? 0));
 
         [Test]
-        public void LinqExtensions() => TestExpression((Expression<Func<Context, int>>) (c => c.Array.FirstOrDefault()));
+        public void LinqExtensions() => TestExpression((Expression<Func<Context, int>>)(c => c.Array.FirstOrDefault()));
 
         [Test]
-        public void Method() => TestExpression((Expression<Func<Context, int>>) (c => c.Method()));
+        public void Method() => TestExpression((Expression<Func<Context, int>>)(c => c.Method()));
 
         [Test]
-        public void MethodResultCast() => TestExpression((Expression<Func<Context, int>>) (c => (int) c.Method3()));
+        public void MethodResultCast() => TestExpression((Expression<Func<Context, int>>)(c => (int)c.Method3()));
 
         [Test]
-        public void MethodWithArguments() => TestExpression((Expression<Func<Context, int>>) (c => c.Method("B")));
+        public void MethodWithArguments() => TestExpression((Expression<Func<Context, int>>)(c => c.Method("B")));
 
         [Test]
-        public void Negation() => TestExpression((Expression<Func<Context, int>>) (c => -c.A));
+        public void Negation() => TestExpression((Expression<Func<Context, int>>)(c => -c.A));
 
         [Test]
-        public void New() => TestExpression((Expression<Func<Context, object>>) (c => new object()));
+        public void New() => TestExpression((Expression<Func<Context, object>>)(c => new object()));
 
         [Test]
-        public void NewWithArguments() => TestExpression((Expression<Func<Context, object>>) (c => new string('s', 1)));
+        public void NewWithArguments() => TestExpression((Expression<Func<Context, object>>)(c => new string('s', 1)));
 
         [Test]
-        public void PropertyAccess() => TestExpression((Expression<Func<Context, int>>) (c => c.B));
+        public void PropertyAccess() => TestExpression((Expression<Func<Context, int>>)(c => c.B));
 
         [Test]
-        public void TypeAs() => TestExpression((Expression<Func<Context, object>>) (c => c as object));
+        public void TypeAs() => TestExpression((Expression<Func<Context, object>>)(c => c as object));
 
         [Test]
-        public void TypeIs() => TestExpression((Expression<Func<Context, bool>>) (c => c is object));
+        public void TypeIs() => TestExpression((Expression<Func<Context, bool>>)(c => c is object));
 
         [Test]
-        public void TypeOf() => TestExpression((Expression<Func<Context, bool>>) (c => typeof(Context) == c.GetType()));
+        public void TypeOf() => TestExpression((Expression<Func<Context, bool>>)(c => typeof(Context) == c.GetType()));
 
         [Test]
-        public void Xor() => TestExpression((Expression<Func<Context, int>>) (c => c.A ^ c.B));
+        public void Xor() => TestExpression((Expression<Func<Context, int>>)(c => c.A ^ c.B));
     }
 }

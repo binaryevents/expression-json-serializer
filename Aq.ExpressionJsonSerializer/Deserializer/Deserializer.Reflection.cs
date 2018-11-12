@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
 
-namespace Aq.ExpressionJsonSerializer
+namespace Aq.ExpressionJsonSerializer.Deserializer
 {
     internal partial class Deserializer
     {

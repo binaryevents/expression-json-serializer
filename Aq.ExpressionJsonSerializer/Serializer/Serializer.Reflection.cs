@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Aq.ExpressionJsonSerializer
+namespace Aq.ExpressionJsonSerializer.Serializer
 {
     internal partial class Serializer
     {
