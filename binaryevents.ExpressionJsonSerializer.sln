@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "binaryevents.ExpressionJsonSerializer", "ExpressionJsonSerializer\binaryevents.ExpressionJsonSerializer.csproj", "{F6FD2AAC-7409-48A1-80C5-112CCAF4FA1A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "binaryevents.ExpressionJsonSerializer", "ExpressionJsonSerializer\binaryevents.ExpressionJsonSerializer.csproj", "{F6FD2AAC-7409-48A1-80C5-112CCAF4FA1A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "binaryevents.ExpressionJsonSerializer.Tests", "ExpressionJsonSerializer.Tests\binaryevents.ExpressionJsonSerializer.Tests.csproj", "{348525AE-72C1-4250-81D2-79D244856F7C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "binaryevents.ExpressionJsonSerializer.Tests", "ExpressionJsonSerializer.Tests\binaryevents.ExpressionJsonSerializer.Tests.csproj", "{348525AE-72C1-4250-81D2-79D244856F7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

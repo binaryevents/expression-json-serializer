@@ -3,6 +3,19 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	<LangVersion>latest</LangVersion>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<Version>0.0.1</Version>
+	<Authors>aquilae, Robert Butzhammer</Authors>
+	<Company />
+	<Product />
+	<Description>A JsonConverter for Json.net handling serialization of expression trees.</Description>
+	<Copyright>Copyright (c) 2018 Robert Butzhammer</Copyright>
+	<PackageLicenseUrl>https://github.com/binaryevents/expression-json-serializer/blob/master/LICENSE</PackageLicenseUrl>
+	<PackageProjectUrl>https://github.com/binaryevents/expression-json-serializer</PackageProjectUrl>
+	<PackageIconUrl>https://avatars1.githubusercontent.com/u/3463172?s=460&amp;v=4</PackageIconUrl>
+	<RepositoryUrl>https://github.com/binaryevents/expression-json-serializer</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<PackageTags>Json.net, Expressions</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
