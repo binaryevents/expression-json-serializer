@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace Aq.ExpressionJsonSerializer.Tests
+namespace binaryevents.ExpressionJsonSerializer.Tests
 {
     [TestFixture]
     public class ExpressionJsonSerializerTest

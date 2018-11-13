@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
 
-namespace Aq.ExpressionJsonSerializer
+namespace binaryevents.ExpressionJsonSerializer
 {
     internal class Deserializer
     {

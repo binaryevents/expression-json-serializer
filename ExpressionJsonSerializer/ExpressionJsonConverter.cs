@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Aq.ExpressionJsonSerializer
+namespace binaryevents.ExpressionJsonSerializer
 {
     public class ExpressionJsonConverter : JsonConverter
     {
